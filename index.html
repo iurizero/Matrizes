@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Matrizes: definição, tipos, propriedades e operações</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-content">
+      <h1 class="site-title">Matrizes: Fundamentos e Aplicações</h1>
+      <nav class="site-nav">
+        <a href="#definicao">Definição</a>
+        <a href="#representacao">Representação</a>
+        <a href="#lei">Lei de formação</a>
+        <a href="#tipos">Tipos</a>
+        <a href="#propriedades">Propriedades</a>
+        <a href="#operacoes">Operações</a>
+        <a href="#computacao">Na Computação</a>
+        <a href="#usos">Usos detalhados</a>
+        <a href="#teoricos">Teóricos TI</a>
+        <a href="#exemplos">Exemplos TI</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h2>Matrizes: o alicerce da Álgebra Linear</h2>
+      <p>Entenda como matrizes são definidas, representadas e manipuladas. Explore tipos clássicos, propriedades e operações, com exemplos práticos e recursos interativos.</p>
+    </section>
+
+    <section id="definicao" class="section">
+      <h3>Definição</h3>
+      <p>Uma matriz é um arranjo retangular de números (ou elementos) organizado em <strong>m</strong> linhas e <strong>n</strong> colunas. Notamos por <code>A ∈ ℝ<sup>m×n</sup></code>. O elemento na linha <code>i</code> e coluna <code>j</code> é escrito como <code>a<sub>ij</sub></code>.</p>
+      <div class="matrix-demo">
+        <div class="matrix">
+          <table>
+            <tr><td>1</td><td>2</td><td>3</td></tr>
+            <tr><td>4</td><td>5</td><td>6</td></tr>
+          </table>
+        </div>
+        <small>Exemplo: matriz 2×3.</small>
+      </div>
+      <p>Quando <strong>m = n</strong>, a matriz é <em>quadrada</em>. Nesse caso, podemos definir conceitos como <em>determinante</em> e <em>inversa</em> (se existir).</p>
+    </section>
+
+    <section id="representacao" class="section">
+      <h3>Representação</h3>
+      <p>Podemos representar uma matriz por:
+      </p>
+      <ul>
+        <li><strong>Lista de elementos</strong>: valores organizados em linhas e colunas.</li>
+        <li><strong>Notação por fórmula</strong>: <code>a<sub>ij</sub> = f(i, j)</code>, onde <code>f</code> descreve a lei de formação.</li>
+        <li><strong>Notação de conjuntos</strong>: <code>A = [a<sub>ij</sub>] ∈ ℝ<sup>m×n</sup></code>.</li>
+      </ul>
+    </section>
+
+    <section id="lei" class="section">
+      <h3>Lei de formação</h3>
+      <p>Defina a matriz pela regra <code>a<sub>ij</sub> = f(i,j)</code> e veja o resultado:</p>
+      <div class="panel">
+        <div class="controls-grid">
+          <label>Tamanho (m linhas): <input id="rows-range" type="range" min="1" max="6" value="3" /><span id="rows-val">3</span></label>
+          <label>Tamanho (n colunas): <input id="cols-range" type="range" min="1" max="6" value="3" /><span id="cols-val">3</span></label>
+          <label>Fórmula:
+            <select id="formula-select">
+              <option value="i+j">a_ij = i + j</option>
+              <option value="i*j">a_ij = i × j</option>
+              <option value="sign">a_ij = (-1)^(i+j)</option>
+              <option value="identidade">a_ij = 1 se i=j, senão 0</option>
+            </select>
+          </label>
+          <button class="btn" id="gen-btn">Gerar matriz</button>
+        </div>
+        <div id="form-matrix" class="matrix-output"></div>
+      </div>
+    </section>
+
+    <section id="tipos" class="section">
+      <h3>Tipos de matrizes</h3>
+      <ul class="cols">
+        <li><strong>Nula</strong>: todos os elementos são 0.</li>
+        <li><strong>Identidade</strong> (I): diagonal principal com 1 e demais 0.</li>
+        <li><strong>Diagonal</strong>: elementos fora da diagonal principal são 0.</li>
+        <li><strong>Linha/Coluna</strong>: apenas uma linha ou uma coluna.</li>
+        <li><strong>Triangular</strong>: superior ou inferior (zeros abaixo/acima da diagonal).</li>
+        <li><strong>Simétrica</strong>: <code>A = A<sup>T</sup></code>.</li>
+        <li><strong>Antissimétrica</strong>: <code>A = -A<sup>T</sup></code>.</li>
+        <li><strong>Ortogonal</strong>: <code>A<sup>T</sup>A = I</code>.</li>
+        <li><strong>Inversa</strong>: para quadradas e <code>det(A) ≠ 0</code>, existe <code>A<sup>-1</sup></code>.</li>
+      </ul>
+    </section>
+
+    <section id="propriedades" class="section">
+      <h3>Propriedades</h3>
+      <ul class="cols">
+        <li><strong>Adição</strong>: comutativa e associativa (mesmo tamanho).</li>
+        <li><strong>Multiplicação</strong>: associativa; <em>não</em> é comutativa (em geral).</li>
+        <li><strong>Distributividade</strong>: <code>A(B + C) = AB + AC</code>.</li>
+        <li><strong>Transposta</strong>: <code>(AB)<sup>T</sup> = B<sup>T</sup>A<sup>T</sup></code>.</li>
+        <li><strong>Determinante</strong>: <code>det(AB) = det(A) det(B)</code>.</li>
+        <li><strong>Inversa</strong>: <code>(AB)<sup>-1</sup> = B<sup>-1</sup>A<sup>-1</sup></code>.</li>
+      </ul>
+    </section>
+
+    <section id="operacoes" class="section">
+      <h3>Operações com matrizes</h3>
+      <p>Escolha o tamanho, insira os valores de <strong>A</strong> e <strong>B</strong> e execute operações:</p>
+      <div class="panel">
+        <div class="controls-grid">
+          <label>Tamanho:
+            <select id="dim-select">
+              <option value="2">2×2</option>
+              <option value="3">3×3</option>
+            </select>
+          </label>
+          <button class="btn" id="reset-inputs">Limpar entradas</button>
+        </div>
+        <div class="inputs-grid">
+          <div>
+            <h4>A</h4>
+            <div id="A-input" class="matrix-input"></div>
+          </div>
+          <div>
+            <h4>B</h4>
+            <div id="B-input" class="matrix-input"></div>
+          </div>
+        </div>
+        <div class="actions-grid">
+          <button class="btn" id="sum-btn">A + B</button>
+          <button class="btn" id="mul-btn">A × B</button>
+          <button class="btn" id="trans-btn">Transposta de A</button>
+          <button class="btn" id="det-btn">Determinante de A</button>
+          <button class="btn" id="inv-btn">Inversa de A</button>
+        </div>
+        <div id="results" class="results-grid"></div>
+      </div>
+    </section>
+
+    <section id="computacao" class="section">
+      <h3>Matrizes na Computação</h3>
+      <ul class="cols comp-list">
+        <li>
+          <span class="comp-img">
+            <svg viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
+              <title>Transformações 2D/3D</title>
+              <g stroke="rgba(148,163,184,0.5)" stroke-width="1">
+                <line x1="0" y1="40" x2="120" y2="40" />
+                <line x1="60" y1="0" x2="60" y2="80" />
+              </g>
+              <rect x="30" y="20" width="60" height="40" fill="none" stroke="#22c55e" stroke-width="2" />
+              <rect x="30" y="20" width="60" height="40" fill="none" stroke="#38bdf8" stroke-width="2" transform="rotate(25 60 40)" />
+            </svg>
+          </span>
+          <div><strong>Gráficos 2D/3D</strong>: transformações (rotação, escala, translação).</div>
+        </li>
+        <li>
+          <span class="comp-img">
+            <svg viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
+              <title>Camada Linear (IA/ML)</title>
+              <g stroke="rgba(148,163,184,0.5)" stroke-width="1">
+                <line x1="20" y1="20" x2="60" y2="15" />
+                <line x1="20" y1="20" x2="60" y2="40" />
+                <line x1="20" y1="20" x2="60" y2="65" />
+                <line x1="20" y1="60" x2="60" y2="15" />
+                <line x1="20" y1="60" x2="60" y2="40" />
+                <line x1="20" y1="60" x2="60" y2="65" />
+                <line x1="60" y1="15" x2="100" y2="40" />
+                <line x1="60" y1="40" x2="100" y2="40" />
+                <line x1="60" y1="65" x2="100" y2="40" />
+              </g>
+              <g fill="#22c55e"><circle cx="20" cy="20" r="5" /><circle cx="20" cy="60" r="5" /></g>
+              <g fill="#38bdf8"><circle cx="60" cy="15" r="5" /><circle cx="60" cy="40" r="5" /><circle cx="60" cy="65" r="5" /></g>
+              <g fill="#f59e0b"><circle cx="100" cy="40" r="6" /></g>
+            </svg>
+          </span>
+          <div><strong>IA/ML</strong>: pesos de redes neurais e operações de álgebra linear.</div>
+        </li>
+        <li>
+          <span class="comp-img">
+            <svg viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
+              <title>Convolução 3×3</title>
+              <g stroke="rgba(148,163,184,0.4)" stroke-width="1" fill="none">
+                <rect x="18" y="14" width="24" height="24" fill="#1f2937" />
+                <rect x="46" y="14" width="24" height="24" fill="#1f2937" />
+                <rect x="74" y="14" width="24" height="24" fill="#1f2937" />
+                <rect x="18" y="42" width="24" height="24" fill="#1f2937" />
+                <rect x="46" y="42" width="24" height="24" fill="#0ea5e9" />
+                <rect x="74" y="42" width="24" height="24" fill="#1f2937" />
+                <rect x="18" y="70" width="24" height="24" fill="#1f2937" />
+                <rect x="46" y="70" width="24" height="24" fill="#1f2937" />
+                <rect x="74" y="70" width="24" height="24" fill="#1f2937" />
+              </g>
+            </svg>
+          </span>
+          <div><strong>Processamento de Imagens</strong>: filtros de convolução e suavização.</div>
+        </li>
+        <li>
+          <span class="comp-img">
+            <svg viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
+              <title>Criptografia</title>
+              <g stroke="rgba(148,163,184,0.5)" stroke-width="2" fill="none">
+                <path d="M10 20 v40" />
+                <path d="M110 20 v40" />
+              </g>
+              <rect x="48" y="34" width="24" height="26" fill="#0ea5e9" stroke="#38bdf8" stroke-width="2" />
+              <path d="M54 34 a12 12 0 0 1 24 0" stroke="#38bdf8" stroke-width="2" fill="none" />
+            </svg>
+          </span>
+          <div><strong>Criptografia</strong>: cifra de Hill e codificação linear.</div>
+        </li>
+        <li>
+          <span class="comp-img">
+            <svg viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
+              <title>Simulações</title>
+              <g stroke="rgba(148,163,184,0.4)" stroke-width="1">
+                <rect x="20" y="20" width="80" height="40" fill="none" />
+                <line x1="20" y1="40" x2="100" y2="40" />
+                <line x1="60" y1="20" x2="60" y2="60" />
+                <line x1="20" y1="20" x2="60" y2="60" />
+                <line x1="60" y1="20" x2="100" y2="60" />
+                <line x1="20" y1="60" x2="60" y2="20" />
+                <line x1="60" y1="60" x2="100" y2="20" />
+              </g>
+            </svg>
+          </span>
+          <div><strong>Simulações</strong>: sistemas lineares e métodos numéricos.</div>
+        </li>
+      </ul>
+    </section>
+    <section id="usos" class="section">
+      <h3>Usos detalhados de matrizes em TI</h3>
+      <div class="panel">
+        <h4>Gráficos 2D/3D</h4>
+        <p>Matrizes são aplicadas a cada quadro renderizado para transformar vértices: a posição local de um objeto é multiplicada pela <em>matriz de modelo</em> (rotação/escala/translação), depois pela <em>matriz de visão</em> (ponto de vista da câmera) e pela <em>matriz de projeção</em> (perspectiva). Em jogos e interfaces, isso ocorre no loop de renderização: quando você gira um personagem, amplia um elemento de UI, ou anima ícones no celular, está multiplicando coordenadas por matrizes.</p>
+        <p>Onde aparece na prática: motores de jogos (Unity/Unreal), WebGL/Canvas, animações de UI (CSS transform usa internamente matrizes), visualização científica e CAD.</p>
+      </div>
+      <div class="panel">
+        <h4>IA/ML</h4>
+        <p>Camadas lineares e convolucionais são operações matriciais. No <em>forward</em>, entradas em lote (batch) formam uma matriz <code>X</code> que é multiplicada por os pesos <code>W</code> e somada ao viés <code>b</code>: <code>Y = XW + b</code>. No <em>backpropagation</em>, gradientes usam transpostas e multiplicações adicionais para atualizar pesos. Em inferência, as mesmas multiplicações acontecem para cada requisição.</p>
+        <p>Onde aparece na prática: classificação/recomendação (aplicativos de e‑commerce/streaming), modelos de visão (detecção/segmentação), NLP e chatbots, e em frameworks como PyTorch/TensorFlow.</p>
+      </div>
+      <div class="panel">
+        <h4>Processamento de Imagens</h4>
+        <p>Filtros são <em>convoluções</em> que deslizam um <em>kernel</em> (matriz pequena) sobre a imagem: cada pixel de saída é a soma ponderada dos vizinhos de entrada, ou seja, um produto de matrizes local. Isso implementa blur, nitidez e detecção de bordas. Operações como rotação/escala de imagens também usam matrizes de transformação.</p>
+        <p>Onde aparece na prática: câmera do smartphone (denoise/ HDR), editores de imagem, filtros em redes sociais, visão computacional industrial.</p>
+      </div>
+      <div class="panel">
+        <h4>Criptografia</h4>
+        <p>A <em>cifra de Hill</em> cifra blocos de texto transformando vetores de letras pela multiplicação com uma matriz‑chave invertível. A decifra usa a inversa da matriz. Em <em>códigos lineares</em>, a <em>matriz geradora</em> cria palavras‑código; a <em>matriz de verificação</em> detecta e corrige erros via álgebra linear.</p>
+        <p>Onde aparece na prática: sistemas acadêmicos/didáticos, codificação de dados em telecom, armazenamento confiável (erasure codes) e QR Codes/ETC.</p>
+      </div>
+      <div class="panel">
+        <h4>Simulações</h4>
+        <p>Métodos numéricos formulam problemas como sistemas lineares <code>Ax = b</code>. Em elementos finitos, cada passo constrói matrizes (rigidez/massa) e resolve para deslocamentos/pressões/temperaturas. Em simulações de tempo, grandes matrizes esparsas são resolvidas repetidamente com solvers otimizados.</p>
+        <p>Onde aparece na prática: engenharia (estruturas/fluídos), meteorologia, finanças quantitativas, robótica e controle.</p>
+      </div>
+    </section>
+    <section id="teoricos" class="section">
+      <h3>Exemplos Teóricos em TI</h3>
+      <ul class="cols">
+        <li><strong>Grafos</strong>: matriz de adjacência <code>A</code>; <code>(A^k)_{ij}</code> conta caminhos de comprimento <code>k</code> entre vértices <code>i</code> e <code>j</code>.</li>
+        <li><strong>Transformações 2D/3D</strong>: rotação 2D <code>R(θ) = [[cosθ, -sinθ],[sinθ, cosθ]]</code>; composições por multiplicação de matrizes.</li>
+        <li><strong>Convolução</strong>: operação linear com kernel <code>K</code>; saída <code>Y = X * K</code> para realce/suavização de imagens.</li>
+        <li><strong>IA/ML</strong>: camada linear <code>y = W x + b</code>; ajuste de parâmetros via gradiente.</li>
+      </ul>
+    </section>
+  <section id="exemplos" class="section">
+      <h3>Exemplos Práticos em TI</h3>
+      <p>Veja matrizes em ação: gráficos 2D e processamento de imagens.</p>
+      <div class="panel">
+        <h4>Gráficos 2D: rotação/escala com matriz</h4>
+        <div class="controls-grid">
+          <label>Ângulo (°): <input id="rot-range" type="range" min="0" max="180" value="30" /><span id="rot-val">30</span></label>
+          <label>Escala: <input id="scale-range" type="range" min="0.5" max="2.0" step="0.05" value="1.0" /><span id="scale-val">1.0</span></label>
+        </div>
+        <div class="demo-grid">
+          <canvas id="gfx-canvas" width="360" height="240"></canvas>
+          <div>
+            <small>Matriz de transformação:</small>
+            <div id="gfx-matrix" class="matrix-output"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h4>IA/ML: camada linear y = W x + b</h4>
+        <p>Edite W (2×2), x (2×1) e b (2×1) e calcule a saída y.</p>
+        <div class="demo-grid">
+          <div>
+            <small>Matriz W</small>
+            <div id="lin-W" class="matrix-input"></div>
+          </div>
+          <div>
+            <small>Vetor x</small>
+            <div id="lin-x" class="matrix-input"></div>
+          </div>
+          <div>
+            <small>Vetor b</small>
+            <div id="lin-b" class="matrix-input"></div>
+          </div>
+          <div>
+            <small>Saída y</small>
+            <div id="lin-y" class="matrix-output"></div>
+          </div>
+        </div>
+        <div class="actions-grid">
+          <button class="btn" id="lin-reset">Resetar valores</button>
+          <button class="btn" id="lin-calc">Calcular y = W x + b</button>
+        </div>
+      </div>
+      <div class="panel">
+        <h4>Processamento de Imagens: convolução 3×3</h4>
+        <div class="controls-grid">
+          <label>Kernel:
+            <select id="kernel-select">
+              <option value="blur">Blur (suavização)</option>
+              <option value="sharpen">Sharpen (nitidez)</option>
+              <option value="edge">Edge (bordas)</option>
+            </select>
+          </label>
+          <button class="btn" id="apply-kernel-btn">Aplicar filtro</button>
+        </div>
+        <div class="demo-grid">
+          <div>
+            <small>Original</small>
+            <canvas id="img-src" width="360" height="240"></canvas>
+          </div>
+          <div>
+            <small>Filtrado</small>
+            <canvas id="img-out" width="360" height="240"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <small>Conteúdo educativo • Autor: iurizero • Matrizes</small>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
