@@ -195,6 +195,11 @@ canvas { max-width: 100%; height: auto; }
   background-color: #0a1122;
   font-weight: bold;
 }
+.demo-image2 {
+  width: 500px;  /* nova largura */
+  height: auto;  /* mantém proporção */
+}
+
 canvas { border-radius: 12px; background: #0a1122; border: 1px solid rgba(148,163,184,0.2); }
 .section h4 { margin: 4px 0 8px; font-size: 1.15rem; }
 .comp-list li { display: flex; align-items: center; gap: 12px; break-inside: avoid; }
