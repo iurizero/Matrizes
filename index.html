@@ -243,71 +243,19 @@
         <p>Onde aparece na prática: classificação/recomendação (aplicativos de e‑commerce/streaming), modelos de visão (detecção/segmentação), NLP e chatbots, e em frameworks como PyTorch/TensorFlow.</p>
       </div>
       <div class="panel">
-        <h4>Processamento de Imagens: exemplos de filtros 3×3</h4>
-        <p>A convolução é uma operação matemática que aplica uma matriz (kernel) sobre uma imagem para produzir efeitos como desfoque, nitidez ou detecção de bordas.</p>
-        
-        <div class="filter-explanation">
-          <p><strong>Como funciona a convolução:</strong></p>
-          <ol>
-            <li>Cria-se um kernel de convolução (uma matriz de valores)</li>
-            <li>Para cada pixel da imagem:
-              <ul>
-                <li>Seleciona-se os pixels vizinhos (dependendo do tamanho do kernel)</li>
-                <li>Multiplica-se cada pixel pelo valor correspondente no kernel</li>
-                <li>Soma-se todos estes valores</li>
-                <li>Normaliza-se o resultado (se necessário)</li>
-              </ul>
-            </li>
-            <li>O resultado é uma nova imagem filtrada</li>
-          </ol>
-        </div>
+        <h4>Processamento de Imagens: exemplos de filtros</h4>
+        <p>Exemplos de diferentes filtros aplicados em imagens usando matrizes de convolução.</p>
         
         <div class="demo-grid">
           <div>
             <small>Original</small>
-            <img class="demo-image" src="original.jpeg" alt="Original (padrão sintético)" width="360" height="240" />
+            <img class="demo-image" src="blurexamples.png" alt="Imagem original" width="360" height="240" />
+            <p>Imagem sem filtros aplicados</p>
           </div>
           <div>
             <small>Blur (suavização)</small>
-            <div class="filter-kernel">
-              <p>Box blur (normalizado):</p>
-              <div class="matrix">
-                <div class="fraction">1/9</div>
-                <div class="matrix-content">
-                  [1 1 1]<br>
-                  [1 1 1]<br>
-                  [1 1 1]
-                </div>
-              </div>
-              <p>Cada pixel é a média dos 9 pixels vizinhos, suavizando a imagem.</p>
-            </div>
-            <img class="demo-image" src="blur.jpeg" alt="Blur (box 3×3)" width="360" height="240" />
-          </div>
-          <div>
-            <small>Sharpen (nitidez)</small>
-            <div class="filter-kernel">
-              <p>Kernel de nitidez:</p>
-              <div class="matrix">
-                [0 -1 0]<br>
-                [-1 5 -1]<br>
-                [0 -1 0]
-              </div>
-              <p>Reforça o pixel central e subtrai os vizinhos, aumentando o contraste local.</p>
-            </div>
-            <img class="demo-image" src="sharpen.jpeg" alt="Sharpen (3×3)" width="360" height="240" />
-          </div>
-          <div>
-            <small>Edge (bordas)</small>
-            <div class="filter-kernel">
-              <p>Laplaciano (detecção de bordas):</p>
-              <div class="matrix">
-                [-1 -1 -1]<br>
-                [-1 8 -1]<br>
-                [-1 -1 -1]
-              </div>
-              <p>Detecta mudanças bruscas de intensidade, destacando as bordas.</p>
-            </div>
-            <img class="demo-image" src="edge.jpeg" alt="Edge (Laplaciano 3×3)" width="360" height="240" />
+            <img class="demo-image" src="blur.jpg" alt="Blur (box 3×3)" width="360" height="240" />
+            <p>Suaviza a imagem, reduzindo ruídos e detalhes</p>
           </div>
         </div>
       </div>
