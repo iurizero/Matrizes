@@ -305,8 +305,9 @@ function setupGfxDemo() {
   const rotVal = document.getElementById('rot-val');
   const scaleVal = document.getElementById('scale-val');
   const canvas = document.getElementById('gfx-canvas');
-  const ctx = canvas.getContext('2d');
   const matOut = document.getElementById('gfx-matrix');
+  if (!rotRange || !scaleRange || !rotVal || !scaleVal || !canvas || !matOut) return;
+  const ctx = canvas.getContext('2d');
 
   function draw() {
     const angleDeg = parseFloat(rotRange.value);
@@ -358,88 +359,13 @@ function setupGfxDemo() {
   draw();
 }
 
-function setupImageDemo() {
-  const src = document.getElementById('img-src');
-  const out = document.getElementById('img-out');
-  const sel = document.getElementById('kernel-select');
-  const btn = document.getElementById('apply-kernel-btn');
-  const w = 360, h = 240;
-  src.width = w; src.height = h; out.width = w; out.height = h;
-  const sctx = src.getContext('2d');
-  const octx = out.getContext('2d');
-
-  // padrão sintético em escala de cinza
-  const imgData = sctx.createImageData(w, h);
-  for (let y = 0; y < h; y++) {
-    for (let x = 0; x < w; x++) {
-      const idx = (y * w + x) * 4;
-      const v = Math.floor(128 + 120 * Math.sin(x * 0.04) * Math.cos(y * 0.06));
-      imgData.data[idx] = v;
-      imgData.data[idx + 1] = v;
-      imgData.data[idx + 2] = v;
-      imgData.data[idx + 3] = 255;
-    }
-  }
-  sctx.putImageData(imgData, 0, 0);
-
-  function kernel(name) {
-    switch (name) {
-      case 'blur': return [[1,1,1],[1,1,1],[1,1,1]].map(r => r.map(v => v / 9));
-      case 'sharpen': return [[0,-1,0],[-1,5,-1],[0,-1,0]];
-      case 'edge': return [[-1,-1,-1],[-1,8,-1],[-1,-1,-1]];
-      default: return [[0,0,0],[0,1,0],[0,0,0]];
-    }
-  }
-
-  function applyKernel() {
-    const K = kernel(sel.value);
-    const srcData = sctx.getImageData(0, 0, w, h);
-    const dstData = octx.createImageData(w, h);
-
-    const sumK = K.reduce((s, r) => s + r.reduce((ss, v) => ss + v, 0), 0);
-    const sumAbsK = K.reduce((s, r) => s + r.reduce((ss, v) => ss + Math.abs(v), 0), 0);
-
-    function getGray(x, y) {
-      x = Math.max(0, Math.min(w - 1, x));
-      y = Math.max(0, Math.min(h - 1, y));
-      const i = (y * w + x) * 4;
-      return srcData.data[i]; // grayscale (R channel)
-    }
-
-    for (let y = 0; y < h; y++) {
-      for (let x = 0; x < w; x++) {
-        let acc = 0;
-        for (let ky = -1; ky <= 1; ky++) {
-          for (let kx = -1; kx <= 1; kx++) {
-            acc += K[ky + 1][kx + 1] * getGray(x + kx, y + ky);
-          }
-        }
-        let valRaw = acc;
-        if (sel.value === 'edge') {
-          // realçar bordas com valor absoluto para melhor contraste
-          valRaw = Math.abs(acc);
-          // opcionalmente poderia normalizar por sumAbsK, mas mantemos simples e eficiente
-        } else if (sumK !== 0) {
-          // kernels com soma != 0 já preservam brilho médio (ex.: blur/sharpen definidos acima)
-          valRaw = acc;
-        }
-        const val = Math.max(0, Math.min(255, Math.round(valRaw)));
-        const i = (y * w + x) * 4;
-        dstData.data[i] = val; dstData.data[i + 1] = val; dstData.data[i + 2] = val; dstData.data[i + 3] = 255;
-      }
-    }
-    octx.putImageData(dstData, 0, 0);
-  }
-
-  btn.addEventListener('click', applyKernel);
-  sel.addEventListener('change', applyKernel);
-  applyKernel();
-}
+// Função removida pois as imagens agora são carregadas diretamente de arquivos JPEG
 
 function setupLinearDemo() {
   const yOut = document.getElementById('lin-y');
   const btnReset = document.getElementById('lin-reset');
   const btnCalc = document.getElementById('lin-calc');
+  if (!yOut || !btnReset || !btnCalc) return;
 
   function build() {
     createMatrixInputsRC('lin-W', 2, 2, (i, j) => (i === j ? 1 : 0));
@@ -470,6 +396,5 @@ window.addEventListener('DOMContentLoaded', () => {
   setupFormationPanel();
   setupOpsPanel();
   setupGfxDemo();
-  setupImageDemo();
   setupLinearDemo();
 });

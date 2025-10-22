@@ -243,95 +243,303 @@
         <p>Onde aparece na prática: classificação/recomendação (aplicativos de e‑commerce/streaming), modelos de visão (detecção/segmentação), NLP e chatbots, e em frameworks como PyTorch/TensorFlow.</p>
       </div>
       <div class="panel">
-        <h4>Processamento de Imagens</h4>
-        <p>Filtros são <em>convoluções</em> que deslizam um <em>kernel</em> (matriz pequena) sobre a imagem: cada pixel de saída é a soma ponderada dos vizinhos de entrada, ou seja, um produto de matrizes local. Isso implementa blur, nitidez e detecção de bordas. Operações como rotação/escala de imagens também usam matrizes de transformação.</p>
-        <p>Onde aparece na prática: câmera do smartphone (denoise/ HDR), editores de imagem, filtros em redes sociais, visão computacional industrial.</p>
-      </div>
-      <div class="panel">
-        <h4>Criptografia</h4>
-        <p>A <em>cifra de Hill</em> cifra blocos de texto transformando vetores de letras pela multiplicação com uma matriz‑chave invertível. A decifra usa a inversa da matriz. Em <em>códigos lineares</em>, a <em>matriz geradora</em> cria palavras‑código; a <em>matriz de verificação</em> detecta e corrige erros via álgebra linear.</p>
-        <p>Onde aparece na prática: sistemas acadêmicos/didáticos, codificação de dados em telecom, armazenamento confiável (erasure codes) e QR Codes/ETC.</p>
-      </div>
-      <div class="panel">
-        <h4>Simulações</h4>
-        <p>Métodos numéricos formulam problemas como sistemas lineares <code>Ax = b</code>. Em elementos finitos, cada passo constrói matrizes (rigidez/massa) e resolve para deslocamentos/pressões/temperaturas. Em simulações de tempo, grandes matrizes esparsas são resolvidas repetidamente com solvers otimizados.</p>
-        <p>Onde aparece na prática: engenharia (estruturas/fluídos), meteorologia, finanças quantitativas, robótica e controle.</p>
-      </div>
-    </section>
-    <section id="teoricos" class="section">
-      <h3>Exemplos Teóricos em TI</h3>
-      <ul class="cols">
-        <li><strong>Grafos</strong>: matriz de adjacência <code>A</code>; <code>(A^k)_{ij}</code> conta caminhos de comprimento <code>k</code> entre vértices <code>i</code> e <code>j</code>.</li>
-        <li><strong>Transformações 2D/3D</strong>: rotação 2D <code>R(θ) = [[cosθ, -sinθ],[sinθ, cosθ]]</code>; composições por multiplicação de matrizes.</li>
-        <li><strong>Convolução</strong>: operação linear com kernel <code>K</code>; saída <code>Y = X * K</code> para realce/suavização de imagens.</li>
-        <li><strong>IA/ML</strong>: camada linear <code>y = W x + b</code>; ajuste de parâmetros via gradiente.</li>
-      </ul>
-    </section>
-  <section id="exemplos" class="section">
-      <h3>Exemplos Práticos em TI</h3>
-      <p>Veja matrizes em ação: gráficos 2D e processamento de imagens.</p>
-      <div class="panel">
-        <h4>Gráficos 2D: rotação/escala com matriz</h4>
-        <div class="controls-grid">
-          <label>Ângulo (°): <input id="rot-range" type="range" min="0" max="180" value="30" /><span id="rot-val">30</span></label>
-          <label>Escala: <input id="scale-range" type="range" min="0.5" max="2.0" step="0.05" value="1.0" /><span id="scale-val">1.0</span></label>
+        <h4>Processamento de Imagens: exemplos de filtros 3×3</h4>
+        <p>A convolução é uma operação matemática que aplica uma matriz (kernel) sobre uma imagem para produzir efeitos como desfoque, nitidez ou detecção de bordas.</p>
+        
+        <div class="filter-explanation">
+          <p><strong>Como funciona a convolução:</strong></p>
+          <ol>
+            <li>Cria-se um kernel de convolução (uma matriz de valores)</li>
+            <li>Para cada pixel da imagem:
+              <ul>
+                <li>Seleciona-se os pixels vizinhos (dependendo do tamanho do kernel)</li>
+                <li>Multiplica-se cada pixel pelo valor correspondente no kernel</li>
+                <li>Soma-se todos estes valores</li>
+                <li>Normaliza-se o resultado (se necessário)</li>
+              </ul>
+            </li>
+            <li>O resultado é uma nova imagem filtrada</li>
+          </ol>
         </div>
+        
         <div class="demo-grid">
-          <canvas id="gfx-canvas" width="360" height="240"></canvas>
           <div>
-            <small>Matriz de transformação:</small>
-            <div id="gfx-matrix" class="matrix-output"></div>
+            <small>Original</small>
+            <img class="demo-image" src="original.jpeg" alt="Original (padrão sintético)" width="360" height="240" />
+          </div>
+          <div>
+            <small>Blur (suavização)</small>
+            <div class="filter-kernel">
+              <p>Box blur (normalizado):</p>
+              <div class="matrix">
+                <div class="fraction">1/9</div>
+                <div class="matrix-content">
+                  [1 1 1]<br>
+                  [1 1 1]<br>
+                  [1 1 1]
+                </div>
+              </div>
+              <p>Cada pixel é a média dos 9 pixels vizinhos, suavizando a imagem.</p>
+            </div>
+            <img class="demo-image" src="blur.jpeg" alt="Blur (box 3×3)" width="360" height="240" />
+          </div>
+          <div>
+            <small>Sharpen (nitidez)</small>
+            <div class="filter-kernel">
+              <p>Kernel de nitidez:</p>
+              <div class="matrix">
+                [0 -1 0]<br>
+                [-1 5 -1]<br>
+                [0 -1 0]
+              </div>
+              <p>Reforça o pixel central e subtrai os vizinhos, aumentando o contraste local.</p>
+            </div>
+            <img class="demo-image" src="sharpen.jpeg" alt="Sharpen (3×3)" width="360" height="240" />
+          </div>
+          <div>
+            <small>Edge (bordas)</small>
+            <div class="filter-kernel">
+              <p>Laplaciano (detecção de bordas):</p>
+              <div class="matrix">
+                [-1 -1 -1]<br>
+                [-1 8 -1]<br>
+                [-1 -1 -1]
+              </div>
+              <p>Detecta mudanças bruscas de intensidade, destacando as bordas.</p>
+            </div>
+            <img class="demo-image" src="edge.jpeg" alt="Edge (Laplaciano 3×3)" width="360" height="240" />
           </div>
         </div>
       </div>
 
       <div class="panel">
-        <h4>IA/ML: camada linear y = W x + b</h4>
-        <p>Edite W (2×2), x (2×1) e b (2×1) e calcule a saída y.</p>
-        <div class="demo-grid">
-          <div>
-            <small>Matriz W</small>
-            <div id="lin-W" class="matrix-input"></div>
-          </div>
-          <div>
-            <small>Vetor x</small>
-            <div id="lin-x" class="matrix-input"></div>
-          </div>
-          <div>
-            <small>Vetor b</small>
-            <div id="lin-b" class="matrix-input"></div>
-          </div>
-          <div>
-            <small>Saída y</small>
-            <div id="lin-y" class="matrix-output"></div>
-          </div>
+        <h4>Exemplos de uso de matrizes em diversas áreas</h4>
+        
+        <div class="example-section">
+          <h5>Uso em processamento de imagens</h5>
+          <p>As imagens digitais são naturalmente <strong>matrizes de pixels</strong>.</p>
+          <p>Cada posição da matriz representa um <strong>pixel</strong>, e o valor armazenado é a <strong>intensidade da cor</strong> (ou do canal RGB).</p>
+          
+          <p><strong>Exemplo prático:</strong></p>
+          <ul>
+            <li>Imagem em escala de cinza: <strong>matriz 2D</strong> com valores de 0 a 255.</li>
+            <li>Imagem colorida: <strong>matriz 3D</strong> (altura × largura × 3 canais).</li>
+          </ul>
+          
+          <p><strong>Exemplo em Python com NumPy e OpenCV:</strong></p>
+          <pre><code>import cv2
+import numpy as np
+
+imagem = cv2.imread('foto.jpg', cv2.IMREAD_GRAYSCALE)
+print(imagem.shape)  # Ex: (1080, 1920)
+print(imagem[100][100])  # Valor do pixel na linha 100, coluna 100</code></pre>
+          
+          <p>➡️ <strong>Usos diretos:</strong></p>
+          <ul>
+            <li>Filtros (borramento, nitidez, bordas)</li>
+            <li>Transformações geométricas (rotação, espelhamento)</li>
+            <li>Reconhecimento facial e visão computacional</li>
+          </ul>
         </div>
-        <div class="actions-grid">
-          <button class="btn" id="lin-reset">Resetar valores</button>
-          <button class="btn" id="lin-calc">Calcular y = W x + b</button>
+        
+        <div class="example-section">
+          <h5>Uso em ciência de dados e aprendizado de máquina</h5>
+          <p>Matrizes são fundamentais em <strong>machine learning</strong> e <strong>estatística</strong>.</p>
+          <ul>
+            <li>Cada <strong>linha</strong> representa uma <strong>amostra</strong> (ex: um usuário)</li>
+            <li>Cada <strong>coluna</strong> representa uma <strong>variável</strong> (ex: idade, renda, score)</li>
+          </ul>
+          
+          <p><strong>Exemplo:</strong></p>
+          <pre><code>import numpy as np
+
+# [idade, renda, score]
+dados = np.array([
+    [25, 3000, 0.7],
+    [40, 7000, 0.9],
+    [30, 4000, 0.6]
+])</code></pre>
+          
+          <p>➡️ <strong>Usos diretos:</strong></p>
+          <ul>
+            <li>Operações matriciais no <strong>treinamento de redes neurais</strong></li>
+            <li>Cálculo de <strong>distâncias</strong> entre vetores (Ex: k-NN)</li>
+            <li>Decomposições (SVD, PCA) para <strong>redução de dimensionalidade</strong></li>
+          </ul>
         </div>
-      </div>
-      <div class="panel">
-        <h4>Processamento de Imagens: convolução 3×3</h4>
-        <div class="controls-grid">
-          <label>Kernel:
-            <select id="kernel-select">
-              <option value="blur">Blur (suavização)</option>
-              <option value="sharpen">Sharpen (nitidez)</option>
-              <option value="edge">Edge (bordas)</option>
-            </select>
-          </label>
-          <button class="btn" id="apply-kernel-btn">Aplicar filtro</button>
+        
+        <div class="example-section">
+          <h5>Uso em jogos e simulações</h5>
+          <p>Em jogos 2D e 3D, matrizes representam:</p>
+          <ul>
+            <li>Mapas e terrenos</li>
+            <li>Posições de personagens e objetos</li>
+            <li>Grades de colisão</li>
+          </ul>
+          
+          <p><strong>Exemplo de mapa 2D</strong> (0 = chão, 1 = parede):</p>
+          <pre><code>mapa = [
+    [0, 0, 1, 0],
+    [1, 0, 1, 0],
+    [0, 0, 0, 0]
+]
+
+# Verifica se há parede na posição (0,2)
+if mapa[0][2] == 1:
+    print("Parede!")</code></pre>
+          
+          <p>➡️ Em jogos 3D (como Unity, Unreal), as <strong>transformações</strong> (rotação, translação, escala) de objetos são aplicadas usando <strong>matrizes de transformação 4x4</strong>.</p>
         </div>
-        <div class="demo-grid">
-          <div>
-            <small>Original</small>
-            <canvas id="img-src" width="360" height="240"></canvas>
+        
+        <div class="example-section">
+          <h5>Uso em gráficos 3D e computação gráfica</h5>
+          <p>A matemática 3D é baseada em <strong>matrizes</strong>:</p>
+          <ul>
+            <li>Matriz de <strong>rotação</strong></li>
+            <li>Matriz de <strong>translação</strong></li>
+            <li>Matriz de <strong>escala</strong></li>
+            <li>Matriz de <strong>projeção</strong></li>
+          </ul>
+          <p>Essas operações definem como uma câmera "vê" o mundo 3D — sem elas, não existe renderização gráfica.</p>
+        </div>
+        
+        <div class="example-section">
+          <h5>Uso em sistemas lineares e engenharia de software científica</h5>
+          <p>Em engenharia, resolver <strong>sistemas de equações lineares</strong> é feito com matrizes: A⋅X=B</p>
+          
+          <p><strong>Exemplo com NumPy:</strong></p>
+          <pre><code>import numpy as np
+
+A = np.array([[2, 1], [5, 7]])
+B = np.array([11, 13])
+X = np.linalg.solve(A, B)
+print(X)  # Solução do sistema</code></pre>
+          
+          <p>➡️ <strong>Aplicações:</strong></p>
+          <ul>
+            <li>Simulação de circuitos elétricos</li>
+            <li>Modelagem física e dinâmica</li>
+            <li>Controle de robôs e drones</li>
+          </ul>
+        </div>
+        
+        <div class="example-section">
+          <h5>Uso em inteligência artificial e redes neurais</h5>
+          <p>Os <strong>pesos sinápticos</strong> de uma rede neural são <strong>matrizes</strong>.</p>
+          
+          <p><strong>Exemplo (camada simples):</strong></p>
+          <pre><code>import numpy as np
+
+entradas = np.array([0.5, 0.3])
+pesos = np.array([[0.2, 0.8], [0.6, 0.4]])
+saida = np.dot(entradas, pesos)
+print(saida)</code></pre>
+          
+          <p>➡️ <strong>Em IA:</strong></p>
+          <ul>
+            <li>Treinamento envolve <strong>multiplicações e somas matriciais</strong></li>
+            <li>Frameworks como TensorFlow e PyTorch otimizam isso em GPU</li>
+          </ul>
+        </div>
+        
+        <div class="example-section">
+          <h5>Uso em bancos de dados e algoritmos de recomendação</h5>
+          <p>Em sistemas de recomendação (Netflix, Spotify, Amazon), o histórico de interações é representado como uma <strong>matriz usuário × item</strong>:</p>
+          
+          <div class="matrix-table">
+            <table>
+              <tr>
+                <th>Usuário</th>
+                <th>Filme 1</th>
+                <th>Filme 2</th>
+                <th>Filme 3</th>
+              </tr>
+              <tr>
+                <td>U1</td>
+                <td>5</td>
+                <td>0</td>
+                <td>3</td>
+              </tr>
+              <tr>
+                <td>U2</td>
+                <td>4</td>
+                <td>2</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>U3</td>
+                <td>0</td>
+                <td>3</td>
+                <td>4</td>
+              </tr>
+            </table>
           </div>
-          <div>
-            <small>Filtrado</small>
-            <canvas id="img-out" width="360" height="240"></canvas>
-          </div>
+          
+          <p>➡️ Operações de <strong>fatoração matricial</strong> (como SVD) permitem prever notas faltantes → recomendação automática.</p>
+        </div>
+        
+        <div class="example-section">
+          <h5>Uso em processamento de sinais e som</h5>
+          <p>Áudios também são tratados como matrizes:</p>
+          <ul>
+            <li>Uma dimensão representa o tempo</li>
+            <li>Outra representa o canal (esquerdo/direito)</li>
+          </ul>
+          
+          <p>➡️ Em FFT (Transformada Rápida de Fourier), o sinal é convertido em uma matriz de frequências.</p>
+          
+          <p><strong>Exemplo:</strong></p>
+          <pre><code>import numpy as np
+from scipy.fft import fft
+
+sinal = np.array([0.5, 0.3, 0.8, 0.2])
+frequencias = fft(sinal)
+print(frequencias)</code></pre>
+        </div>
+        
+        <div class="example-section">
+          <h5>Uso em criptografia e segurança da informação</h5>
+          <p>Algoritmos como o <strong>Hill Cipher</strong> usam matrizes para cifrar mensagens.</p>
+          
+          <p><strong>Exemplo básico:</strong></p>
+          <pre><code>import numpy as np
+
+chave = np.array([[3, 3], [2, 5]])
+mensagem = np.array([[7], [4]])  # "HI" em números
+cifrada = np.dot(chave, mensagem) % 26
+print(cifrada)</code></pre>
+          
+          <p>➡️ <strong>Também usada em:</strong></p>
+          <ul>
+            <li>Criptografia quântica (operações matriciais em vetores de estado)</li>
+            <li>Geração de chaves aleatórias</li>
+          </ul>
+        </div>
+        
+        <div class="example-section">
+          <h5>Uso em engenharia de software e robótica</h5>
+          <p>Robôs e braços mecânicos usam matrizes para:</p>
+          <ul>
+            <li>Calcular <strong>cinemática direta e inversa</strong></li>
+            <li>Determinar <strong>ângulos de juntas</strong> e <strong>posição final</strong> de um atuador</li>
+          </ul>
+          <p>T=T1×T2×T3×...×Tn</p>
+          <p>Cada Ti é uma <strong>matriz de transformação homogênea</strong>.</p>
+        </div>
+        
+        <div class="example-section">
+          <h5>Uso em modelagem preditiva e big data</h5>
+          <p>Em sistemas de previsão:</p>
+          <ul>
+            <li>Matrizes contêm <strong>grandes volumes de dados</strong> coletados de sensores ou logs.</li>
+            <li>Operações matriciais permitem:
+              <ul>
+                <li>Calcular correlações</li>
+                <li>Treinar modelos estatísticos</li>
+                <li>Aplicar regressões múltiplas</li>
+              </ul>
+            </li>
+          </ul>
         </div>
       </div>
     </section>
